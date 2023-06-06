@@ -4,7 +4,7 @@ import logging
 
 LOGGER = logging.getLogger(__name__)
 
-def generator_wrapper(reader):
+def generator_wrapper(reader, encoding='utf8'):
     for row in reader:
         to_return = {}
         for key, value in row.items():
@@ -18,6 +18,8 @@ def generator_wrapper(reader):
 
             # replace whitespace with underscores
             formatted_key = re.sub(r"\s+", '_', formatted_key)
+            if value:
+                value = value.encode(encoding, errors='surrogatepass').decode(encoding)
             to_return[formatted_key.lower()] = value
         yield to_return
 
