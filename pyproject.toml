@@ -1,0 +1,47 @@
+
+[project]
+name = "tap-spreadsheets-anywhere"
+version = "0.2.0"
+description = "Singer.io tap for extracting spreadsheet data from cloud storage"
+authors = [
+    {name = "Eric Simmerman", email = ""},
+]
+dependencies = [
+    "singer-python>=5.0.12",
+    "smart-open>=2.1",
+    "voluptuous>=0.10.5",
+    "boto3>=1.15.5",
+    "google-cloud-storage>=2.7.0",
+    "protobuf>=4.21.12",
+    "openpyxl>=3.1.2",
+    "xlrd>=2.0.1",
+    "paramiko>=3.2.0",
+    "azure-storage-blob>=12.14.0",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "AGPL-3.0-only"}
+
+[project.scripts]
+tap-spreadsheets-anywhere = "tap_spreadsheets_anywhere:main"
+
+[build-system]
+requires = ["pdm-pep517>=1.0"]
+build-backend = "pdm.pep517.api"
+
+[tool.pdm.dev-dependencies]
+testing = [
+    "pytest>=7.3.1",
+]
+
+[tool.yamlfix]
+comments_min_spaces_from_content = 2
+comments_require_starting_space = true
+explicit_start = false
+sequence_style = "block_style"
+indent_mapping = 2
+indent_offset = 2
+indent_sequence = 4
+line_length = 180
+quote_basic_values = false
+quote_keys_and_basic_values = false
