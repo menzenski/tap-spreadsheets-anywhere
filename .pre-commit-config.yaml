@@ -9,12 +9,6 @@ repos:
       - id: check-vcs-permalinks
       - id: detect-private-key
       - id: end-of-file-fixer
-      - id: pretty-format-json
-        exclude: tap_spreadsheets_anywhere/test/sample-jsonl.json
-        args:
-          - --autofix
-          - --indent
-          - '2'
       - id: trailing-whitespace
   - repo: https://github.com/lyz-code/yamlfix.git
     rev: 1.9.0
