@@ -23,6 +23,3 @@ class TestFormatHandler(unittest.TestCase):
         config_struct = file_utils.config_by_crawl(crawl_paths)
         self.assertTrue(config_struct['tables'][0]['name'] == 'excel_with_bad_newlinesxlsx',
                         "config did not crawl and parse as expected!")
-
-
-

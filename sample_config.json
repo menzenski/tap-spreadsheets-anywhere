@@ -1,36 +1,38 @@
 {
-    "tables": [
-        {
-            "path": "s3://my-s3-bucket",
-            "name": "target_table_name",
-            "pattern": "subfolder/common_prefix.*",
-            "start_date": "2017-05-01T00:00:00Z",
-            "key_properties": [],
-            "format": "csv",
-            "universal_newlines": false,
-            "skip_initial": 0,
-            "sample_rate": 10,
-            "max_sampling_read": 2000,
-            "max_sampled_files": 3,
-            "prefer_number_vs_integer": true,
-            "schema_overrides": {
-                "column_name": {
-                    "type": "integer"
-                }
-            }
-        },
-        {
-            "path": "sftp://username:password@host//path/file",
-            "name": "another_table_name",
-            "pattern": "subdir/.*User.*",
-            "start_date": "2017-05-01T00:00:00Z",
-            "key_properties": ["id"],
-            "format": "excel",
-            "schema_overrides": {
-                "id": {
-                    "type": "integer"
-                }
-            }
+  "tables": [
+    {
+      "format": "csv",
+      "key_properties": [],
+      "max_sampled_files": 3,
+      "max_sampling_read": 2000,
+      "name": "target_table_name",
+      "path": "s3://my-s3-bucket",
+      "pattern": "subfolder/common_prefix.*",
+      "prefer_number_vs_integer": true,
+      "sample_rate": 10,
+      "schema_overrides": {
+        "column_name": {
+          "type": "integer"
         }
-    ]
+      },
+      "skip_initial": 0,
+      "start_date": "2017-05-01T00:00:00Z",
+      "universal_newlines": false
+    },
+    {
+      "format": "excel",
+      "key_properties": [
+        "id"
+      ],
+      "name": "another_table_name",
+      "path": "sftp://username:password@host//path/file",
+      "pattern": "subdir/.*User.*",
+      "schema_overrides": {
+        "id": {
+          "type": "integer"
+        }
+      },
+      "start_date": "2017-05-01T00:00:00Z"
+    }
+  ]
 }

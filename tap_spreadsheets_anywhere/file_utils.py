@@ -271,11 +271,11 @@ def list_files_in_local_bucket(bucket, search_prefix=None):
 
 def list_files_in_gs_bucket(bucket, search_prefix=None):
     gs_client = storage.Client()
-        
+
     blobs = gs_client.list_blobs(bucket, prefix=search_prefix)
 
     target_objects = [{'Key': blob.name, 'LastModified': blob.updated} for blob in blobs]
-    
+
     LOGGER.info("Found {} files.".format(len(target_objects)))
 
     return target_objects

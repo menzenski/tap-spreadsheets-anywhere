@@ -34,7 +34,3 @@ def get_row_iterator(table_spec, reader):
             return generator_wrapper(json_objects)
         else:
             raise jde
-
-
-
-

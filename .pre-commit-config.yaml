@@ -10,6 +10,7 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: pretty-format-json
+        exclude: tap_spreadsheets_anywhere/test/sample-jsonl.json
         args:
           - --autofix
           - --indent

@@ -7,7 +7,7 @@ This is a [Singer](https://singer.io) tap that reads data from spreadsheet files
 `tap-spreadsheets-anywhere` works together with any other [Singer Target](https://singer.io) to move data from any [smart_open](https://github.com/RaRe-Technologies/smart_open) supported transport to any target destination. [smart_open](https://github.com/RaRe-Technologies/smart_open) supports a wide range of transport options out of the box, including:
 
 - S3
-- local directories (file://) 
+- local directories (file://)
   - NOTE: that absolute paths look like this "file:///root/child/target" with three forward slashes
 - HTTP, HTTPS (read-only)
 - SSH, SCP and SFTP
@@ -36,7 +36,7 @@ config:
     - state
     config:
       tables: []
-``` 
+```
 
 To run this tap directly from the CLI, a config.json file must be supplied which holds the 'tables' array.
 A sample config file is available here [sample_config.json](sample_config.json) and a description of the required/optional fields declared within it follow.
@@ -64,9 +64,9 @@ The configuration is also captured in [tables_config_util.py](tap_spreadsheets_a
             "selected": true,
 
             // for any field in the table, you can hardcode the json schema datatype to override
-            // the schema infered through discovery mode. 
+            // the schema infered through discovery mode.
             // *Note Meltano users* - the scheam override support delivered in Meltano v1.41.1 is more robust
-            //  and should be preferred to this tap-specific override functionality.  
+            //  and should be preferred to this tap-specific override functionality.
             "schema_overrides": {
                 "id": {
                     "type": ["null", "integer"],
@@ -83,7 +83,7 @@ The configuration is also captured in [tables_config_util.py](tap_spreadsheets_a
             "pattern": "subdir/.*User.*",
             "start_date": "2017-05-01T00:00:00Z",
             "key_properties": ["id"],
-            "format": "excel", 
+            "format": "excel",
             // you must specify the worksheet name to pull from in your xls(x) file.
             "worksheet_name": "Names"
         }
@@ -91,7 +91,7 @@ The configuration is also captured in [tables_config_util.py](tap_spreadsheets_a
 }
 
 ```
-Each object in the 'tables' array describes one or more CSV or Excel spreadsheet files that adhere to the same schema and are meant to be tapped as the source for a Singer-based data flow.  
+Each object in the 'tables' array describes one or more CSV or Excel spreadsheet files that adhere to the same schema and are meant to be tapped as the source for a Singer-based data flow.
 - **path**: A string describing the transport and bucket/root directory holding the targeted source files.
 - **name**: A string describing the "table" (aka Singer stream) into which the source data should be loaded.
 - **search_prefix**: (optional) This is an optional prefix to apply after the bucket that will be used to filter files in the listing request from the targeted system. This prefix potentially reduces the number of files returned from the listing request.
@@ -100,26 +100,26 @@ Each object in the 'tables' array describes one or more CSV or Excel spreadsheet
 - **key_properties**: These are the "primary keys" of the CSV files, to be used by the target for deduplication and primary key definitions downstream in the destination.
 - **format**: Must be either 'csv', 'json', 'jsonl' ([JSON Lines](https://jsonlines.org/)), 'excel', or 'detect'. Note that csv can be further customized with delimiter and quotechar variables below.
 - **invalid_format_action**: (optional) By default, the tap will raise an exception if a source file can not be read
-. Set this key to "ignore" to skip such source files and continue the run.  
-- **field_names**: (optional) An array holding the names of the columns in the targeted files. If not supplied, the first row of each file must hold the desired values. 
+. Set this key to "ignore" to skip such source files and continue the run.
+- **field_names**: (optional) An array holding the names of the columns in the targeted files. If not supplied, the first row of each file must hold the desired values.
 - **encoding**: (optional) The file encoding to use when reading text files (i.e., "utf-8" (default), "latin1", "windows-1252")
 - **universal_newlines**: (optional) Should the source file parsers honor [universal newlines](https://docs.python.org/2.3/whatsnew/node7.html)). Setting this to false will instruct the parser to only consider '\n' as a valid newline identifier.
 - **skip_initial**: (optional) How many lines should be skipped. The default is 0.
 - **sample_rate**: (optional) The sampling rate to apply when reading a source file for sampling in discovery mode. A sampling rate of 1 will sample every line.  A sampling rate of 10 (the default) will sample every 10th line.
 - **max_sampling_read**: (optional) How many lines of the source file should be sampled when in discovery mode attempting to infer a schema. The default is 1000 samples.
 - **max_sampled_files**: (optional) The maximum number of files in the targeted set that will be sampled. The default is 5.
-- **max_records_per_run**: (optional) The maximum number of records that should be written to this stream in a single sync run. The default is unlimited. 
+- **max_records_per_run**: (optional) The maximum number of records that should be written to this stream in a single sync run. The default is unlimited.
 - **prefer_number_vs_integer**: (optional) If the discovery mode sampling process sees only integer values for a field, should `number` be used anyway so that floats are not considered errors? The default is false but true can help in situations where floats only appear rarely in sources and may not be detected through discovery sampling.
 - **prefer_schema_as_string**: (optional) Bool value either as true or false (default). Should the schema be all read as string by default.
 - **selected**: (optional) Should this table be synced. Defaults to true. Setting to false will skip this table on a sync run.
 - **worksheet_name**: (optional) the worksheet name to pull from in the targeted xls file(s). Only required when format is excel
-- **delimiter**: (optional) the delimiter to use when format is 'csv'. Defaults to a comma ',' but you can set delimiter to 'detect' to leverage the csv "Sniffer" for auto-detecting delimiter. 
+- **delimiter**: (optional) the delimiter to use when format is 'csv'. Defaults to a comma ',' but you can set delimiter to 'detect' to leverage the csv "Sniffer" for auto-detecting delimiter.
 - **quotechar**: (optional) the character used to surround values that may contain delimiters - defaults to a double quote '"'
 - **json_path**: (optional) the JSON key under which the list of objets to use is located. Defaults to None, corresponding to an array at the top level of the JSON tree.
 
 ### Automatic Config Generation
 
-This is an experimental feature used to crawl a path and generate a config block for every file encountered. An intended 
+This is an experimental feature used to crawl a path and generate a config block for every file encountered. An intended
 use-case is where source files are organized in subdirectories by intended target table. This mode will generate a config
 block for each subdirectory and for each file format within it. The following example config file will crawl the s3
 bucket my-example-bucket and produce config blocks for each folder under it where source files are detected.
@@ -134,14 +134,14 @@ bucket my-example-bucket and produce config blocks for each folder under it wher
         }
     ]
 }
-```  
+```
 
 Typically this mode will be used when there are many streams to be configured and processed. Therefore, generating the
  catalog independently is generally helpful.
 ```bash
 meltano invoke --dump=catalog tap-spreadsheets-anywhere > my-catalog.json
 meltano elt --catalog=my-catalog.json --job_id=my-job-state tap-spreadsheets-anywhere any-loader
-``` 
+```
 
 ### JSON support
 
@@ -151,7 +151,7 @@ JSON files are expected to parse as a root-level array of objects where each obj
     { "name": "row one", "key": 42},
     { "name": "row two", "key": 43}
 ]
-``` 
+```
 
 ### JSONL (JSON Lines) support
 
@@ -159,19 +159,19 @@ JSONL files are expected to parse as one object per line, where each row in a fi
 ```jsonl
 { "name": "row one", "key": 42}
 { "name": "row two", "key": 43}
-``` 
+```
 
 ### Authentication and Credentials
 
 This tap authenticates with target systems as described in the [smart_open documentation here](https://github.com/RaRe-Technologies/smart_open).
 
-### State 
+### State
 
-This tap is designed to continually poll a configured directory for any unprocessed files that match a table configuration and to process any 
-that are found.  On the first syncing run, the declared start_date will be used to filter the set of files that match the search_prefix and pattern expressions. 
+This tap is designed to continually poll a configured directory for any unprocessed files that match a table configuration and to process any
+that are found.  On the first syncing run, the declared start_date will be used to filter the set of files that match the search_prefix and pattern expressions.
 The last modified date of the most recently synced file will then be written to state and used in place of start_date on the next syncing run.
 
-While state is maintained, only new files will be processed from subsequent runs. 
+While state is maintained, only new files will be processed from subsequent runs.
 
 ### Install and Run outside of Meltano
 
@@ -184,7 +184,7 @@ python -m tap_spreadsheets_anywhere --config config.json
 
 ---
 History:
-- this project borrowed heavily from [tap-s3-csv](https://github.com/singer-io/tap-s3-csv). That project was modified to use [smart_open](https://github.com/RaRe-Technologies/smart_open) for support beyond S3 and then migrated to the [cookie cutter based templates](https://github.com/singer-io/singer-tap-template) for taps. 
+- this project borrowed heavily from [tap-s3-csv](https://github.com/singer-io/tap-s3-csv). That project was modified to use [smart_open](https://github.com/RaRe-Technologies/smart_open) for support beyond S3 and then migrated to the [cookie cutter based templates](https://github.com/singer-io/singer-tap-template) for taps.
 - Support for --discover was added so that target files could be sampled independent from sync runs
 - CSV parsing was made more robust and support for configurable typing & sampling added
 - The github commit log holds history from that point forward
