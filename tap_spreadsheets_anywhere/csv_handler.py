@@ -1,8 +1,22 @@
 import csv
 import re
 import logging
+import sys
 
 LOGGER = logging.getLogger(__name__)
+
+
+# https://til.simonwillison.net/python/csv-error-column-too-large
+# Increase CSV field size limit to maximim possible
+# https://stackoverflow.com/a/15063941
+field_size_limit = sys.maxsize
+while True:
+    try:
+        csv.field_size_limit(field_size_limit)
+        break
+    except OverflowError:
+        field_size_limit = int(field_size_limit / 10)
+
 
 def generator_wrapper(reader, encoding='utf8'):
     for row in reader:
@@ -19,7 +33,8 @@ def generator_wrapper(reader, encoding='utf8'):
             # replace whitespace with underscores
             formatted_key = re.sub(r"\s+", '_', formatted_key)
             if value:
-                value = value.encode(encoding, errors='surrogatepass').decode(encoding)
+                value = str(value).encode(encoding, errors='ignore').decode(encoding, errors="replace").replace("\x00", "\uFFFD")
+
             to_return[formatted_key.lower()] = value
         yield to_return
 
