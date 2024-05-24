@@ -13,10 +13,10 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.7,<3.13"
-singer-python = "^5.0.12"
+python = ">=3.8,<3.13"
+singer-python = "^6.0.1"
 smart-open = {extras = ["all"], version = "^7.0.4"}
-voluptuous = "^0.10.5"
+voluptuous = "^0.14.2"
 boto3 = "^1.15.5"
 google-cloud-storage = "^2.7.0"
 protobuf = "^4.21.12"
