@@ -82,6 +82,7 @@ celerybeat-schedule
 .env
 
 # virtualenv
+.venv/
 venv/
 ENV/
 
@@ -108,3 +109,4 @@ tags
 singer-check-tap-data
 state.json
 .pdm-python
+.venv/
